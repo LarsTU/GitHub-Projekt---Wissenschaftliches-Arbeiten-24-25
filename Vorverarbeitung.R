@@ -1,3 +1,4 @@
 # Vorverarbeitung der Daten
 
-titanic = read.csv("C:/Users/larse/OneDrive/Desktop/Uni/Organisation/Dokumente/GitHub/GitHub-Projekt---Wissenschaftliches-Arbeiten-24-25/titanic.csv")
+titanic = read.csv("C:/Users/larse/OneDrive/Desktop/Uni/Inhalte/3. Semester/Wissenschaftliches Arbeiten/GitHub Projekt/titanic.csv")
+

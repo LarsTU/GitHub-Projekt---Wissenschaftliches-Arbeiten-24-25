@@ -40,7 +40,6 @@ titanic$Survived = factor(titanic$Survived,
                           levels = c(0,1), labels = c("no", "yes"))
 
 # Variable "Sex" als Faktor umkodieren
-# --> female steht für weiblich und male für männlich
 titanic$Sex = factor(titanic$Sex, 
                      levels = c("female", "male"), labels = c("female", "male"))
 
@@ -51,4 +50,8 @@ titanic$Embarked = factor(titanic$Embarked,
 
 
 # Variable "Pclass" in einen ordered-factor überführen
+titanic$Pclass = factor(titanic$Pclass, 
+                        levels = c("3", "2", "1"), labels = c("3", "2", "1"),
+                        ordered = TRUE)
+
 

@@ -2,7 +2,7 @@
 
 
 # Einlesen der csv-Datei und speichern in der Variable titanic
-titanic = read.csv("C:/Users/larse/OneDrive/Desktop/Uni/Inhalte/3. Semester/Wissenschaftliches Arbeiten/GitHub Projekt/titanic.csv")
+titanic = read.csv("titanic.csv", sep = ",")
 
 
 # extrahiert aus der Spalte "Name" die Anrede der jeweiligen Person mit der
@@ -53,5 +53,26 @@ titanic$Embarked = factor(titanic$Embarked,
 titanic$Pclass = factor(titanic$Pclass, 
                         levels = c("3", "2", "1"), labels = c("3", "2", "1"),
                         ordered = TRUE)
+
+
+# fehlende Werte in der Variable "Age" mithilfe des Medians imputieren
+
+# medianes Alter der Personen gruppiert nach den Anreden "Master", "Ms", "Mrs"
+# und "Mr" wird mithilfe der Funktion aggregate() berechnet und in der Variable
+# median_age_per_title gespeichert
+median_age_per_title = aggregate(Age~Title, data = titanic, 
+                                 FUN = function(x) median(x, na.rm = TRUE))
+
+
+# ersetze die fehlenden Werte des Alters durch das mediane Alter der 
+# entsprechenden Anrede --> die Funktion unique() wird verwendet, damit die 
+# for-Schleife nur einmal pro Anrede und nicht für jede Zeile einzelnd läuft
+for(title in unique(titanic$Title)) {
+  # bestimmt den Median für die aktuelle Anrede   
+  median_age = median_age_per_title$Age[median_age_per_title$Title == title]
+  # ersetzt alle fehlenden Werte (NA) in der Spalte "Age" mit dem Median der
+  # aktuellen Anrede
+  titanic$Age[is.na(titanic$Age) & titanic$Title == title] = median_age
+}
 
 

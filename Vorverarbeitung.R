@@ -76,3 +76,54 @@ for(title in unique(titanic$Title)) {
 }
 
 
+
+# Erstellt neue Variablen für Backbord oder Steuerbord, Deck und Kabinen-Nummern
+titanic$Side <- NA  # Initialisiere die neue Variable mit NA
+titanic$Deck <- NA  
+titanic$CabinNumbers <- NA 
+
+#Bestimmt Seite, Deck und Kabinen-Nummern aus einer Kabinenliste
+extract_cabin_info <- function(cabin_string) {
+  cabins <- unlist(strsplit(cabin_string, " "))  # Teile die Kabinen in eine Liste auf
+  sides <- c()  # Vektor für dieSeite
+  decks <- c()  # Vektor für das Deck
+  cabin_numbers <- c()  # Vektor die Kabinen-Nummern
+  
+  for (cabin in cabins) {
+    if (nchar(cabin) > 0) {  # Überprüfe, ob die Kabine nicht leer ist
+      cabin_number <- as.numeric(gsub("[^0-9]", "", cabin))  # Extrahiere die Nummer aus der Kabinenbezeichnung
+      
+      if (!is.na(cabin_number)) { 
+        sides <- c(sides, ifelse(cabin_number %% 2 == 1, "Steuerbord", "Backbord"))  
+        # Ungerade Nummer = Steuerbord, gerade Nummer = Backbord
+        decks <- c(decks, substr(cabin, 1, 1)) 
+        # Der vorangehende Buchstabe wird als Deck betrachtet
+        cabin_numbers <- c(cabin_numbers, cabin_number)  
+        # Speichert die extrahierte Zahl in cabin_numbers 
+        
+      }
+    }
+  }
+  
+  return(list(Side = paste(unique(sides), collapse = ", "), 
+              Deck = paste(unique(decks), collapse = ", "),
+              CabinNumbers = paste(unique(cabin_numbers), collapse = ", "))) }
+# Hinweis: Bei mehreren Kabinenangaben (die nicht gleich sind)
+# werden diese zu einem kommagetrennten String zusammengefasst.
+
+# Wendet die Funktion auf jede Zeile im Datensatz an
+for (i in seq_len(nrow(titanic))) {
+  if (titanic$Cabin[i] != "") { 
+    cabin_info <- extract_cabin_info(titanic$Cabin[i]) 
+    # Speichert das Ergebnis in den neuen Spalten
+    titanic$Side[i] <- cabin_info$Side 
+    titanic$Deck[i] <- cabin_info$Deck 
+    titanic$CabinNumbers[i] <- cabin_info$CabinNumbers   
+    
+  }
+}
+#durch die Initialisierung mit Na sind Einträge mit unbekannter Kabinennummer bereits NA
+
+
+# Entfernt die Variablen "PassengerId", "Name", "Ticket" und "Cabin"
+titanic <- titanic[, !(names(titanic) %in% c("PassengerId", "Name", "Ticket", "Cabin"))]

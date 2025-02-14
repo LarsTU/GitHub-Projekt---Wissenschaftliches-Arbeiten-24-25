@@ -23,3 +23,35 @@ berechneModus <- function(x) {
   return(modus)
 }
 
+# Passt ein ggplot2-Objekt mit einem standardisierten Layout und Theme an,
+# für eine konsistente Darstellung der Visualisierungen.
+# Parameter:
+#   - plotObj: Ein ggplot2-Objekt, das angepasst werden soll.
+#   - titel: Ein String, der als Plot-Titel genutzt wird.
+#   - x_achse: Optionaler String zur Beschriftung der x-Achse.
+#   - y_achse: Optionaler String zur Beschriftung der y-Achse.
+# Rückgabe:
+#   - Das angepasste ggplot2-Objekt.
+# ------------------------------------------------------------------
+visualisierungsHelfer <- function(plotObj, titel, x_achse = NULL, y_achse = NULL) {
+  
+  library(ggplot2)
+  
+  plotObj <- plotObj +
+    ggtitle(titel) +
+    theme_minimal() +
+    theme(
+      plot.title = element_text(hjust = 0.5, size = 16, face = "bold"),
+      axis.title = element_text(size = 14),
+      axis.text = element_text(size = 12)
+    )
+  
+  if (!is.null(x_achse)) {
+    plotObj <- plotObj + xlab(x_achse)
+  }
+  if (!is.null(y_achse)) {
+    plotObj <- plotObj + ylab(y_achse)
+  }
+  
+  return(plotObj)
+}

@@ -20,6 +20,10 @@ berechneModus <- function(x) {
   max_häufigkeit = max(tab)
   # Ermittle alle Werte, die diesen Häufigkeitswert haben
   modus = names(tab)[tab == max_häufigkeit]
+  # Für numerische Variablen in numerisches Format umwandeln
+  if (is.numeric(x)) {
+    modus <- as.numeric(modus)
+  }
   return(modus)
 }
 

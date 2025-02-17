@@ -1,12 +1,11 @@
 # Aufgabe 2, i) und ii)
 
-
-# i) Funktion für metrische Variablen:
+source("Funktion-R_Skript 2.R")
+# i) Funktion für metrische Variablen (angepasst):
 
 analyse_metrisch = function(variable){
-  
+  variable = convertToFactor(variable)  # Umwandlung falls nötig
   statistiken = list(
-    
     Mittelwert = mean(variable, na.rm = TRUE), # Mittelwert
     Median = median(variable, na.rm = TRUE), # Median
     Standardabweichung = sd(variable, na.rm = TRUE), # Standardabweichung
@@ -18,24 +17,23 @@ analyse_metrisch = function(variable){
     # range/ Spannweite
     Interquartilsabstand = IQR(variable, na.rm = TRUE),
     # Interquartilsabstand (oberes Quartil - unteres Quartil)
-    Modus = modus_metrisch(variable)
-    # Modalwert/ Modus wird mithilfe einer Helfer-Funktion bestimmt
+    Modus = berechneModus(variable)  # Nutzung der Modus-Helferfunktion
   )
   
   return(statistiken) # Rückgabe der Statistiken für metrische Variablen
 }
 
 
+
 # ii) Funktion für kategoriale Variablen:
 
 analyse_kategorial = function(variable){
-  
+  variable = convertToFactor(variable)  # Umwandlung falls nötig
   # Häufigkeitstabelle (abs. Häufigkeit) für die Ausprägungen 
   # einer kategorialen Variable
   absolute_häufigkeiten = table(variable, useNA = "ifany") 
   # Argument useNA = "ifany" --> falls es fehlende Werte gibt, wird deren 
   # Häufigkeit in der Tabelle angezeigt
-  
   
   # relative Häufigkeitstabelle für die Ausprägungen 
   # einer kategorialen Variable
@@ -43,11 +41,8 @@ analyse_kategorial = function(variable){
   # Funktion prob.table wandelt die Häufigkeitstabelle (absolute_häufigkeiten) 
   # in eine relative Häufigkeitstabelle um 
   
-  
   # Modus für kategoriale Variablen
-  modus = modus_kategorial(variable)
-
-  
+  modus = berechneModus(variable)  # Nutzung der Modus-Helferfunktion
   # speichert Statistiken in einer Liste
   statistiken = list(
     Absolute_Häufigkeiten = absolute_häufigkeiten,
@@ -59,38 +54,6 @@ analyse_kategorial = function(variable){
 }
 
 
-
-# Helfer-Funktionen, die in Funktionen-R-Skript 2 ergänzt werden
-
-# Modus für kategoriale Variablen
-modus_kategorial = function(variable) {
-  
-  if (all(is.na(variable))) {
-    return(NA)  # Falls alle Werte NA sind, Modus = NA
-  }
-    
-  tab = table(variable, useNA = "no")  # Häufigkeitstabelle ohne NA
-  max_häufigkeit <- max(tab)  # Maximale Häufigkeit ermitteln
-  modus_kateg <- names(tab[tab == max_häufigkeit])  
-  # bestimmt Modus
-    
-  return(modus_kateg) # gibt Modus zurück
-}
-
-# Modus für metrische Variablen
-modus_metrisch = function(variable) {
-  
-  if (all(is.na(variable))) {
-    return(NA)  # Falls alle Werte NA sind, Modus = NA
-  }
-  
-  tab = table(variable, useNA = "no")  # Häufigkeitstabelle ohne NA
-  max_häufigkeit = max(tab)  # Maximale Häufigkeit ermitteln
-  modus_metr = as.numeric(names(tab[tab == max_häufigkeit]))
-  # bestimmt Modus
-  
-  return(modus_metr)
-}
 
 
 

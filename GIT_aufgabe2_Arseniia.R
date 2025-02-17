@@ -3,6 +3,8 @@
 #zwischen zwei kategorialen Variablen (Kontingenztafel mit absoluter 
 #und mit relativer Haufigkeit)
 zusammenhang_kategorial <- function(x, y) {
+  x <- convertToFactor(x)
+  y <- convertToFactor(y)
   #Kontingenztafel mit absoluter Haufigkeit erstellen
   abs_tabelle <- table(x,y)
   
@@ -20,6 +22,7 @@ zusammenhang_kategorial(titanic$Survived, titanic$Sex)
 #Funktion für bivariate deskriptive Statistiken 
 #zwischen einer metrischen (x) und einer dichotomen (y) Variablen
 zusammenhang_metrisch_dichotom <- function(x, y) {
+  y <- convertToFactor(y)
   #Mittelwert, Median, Standardabweichung für jede Gruppe
   summary_data <- data.frame(
     Gruppe = levels(y),

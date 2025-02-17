@@ -36,26 +36,38 @@ berechneModus <- function(x) {
 #   - y_achse: Optionaler String zur Beschriftung der y-Achse.
 # Rückgabe:
 #   - Das angepasste ggplot2-Objekt.
-# ------------------------------------------------------------------
+
 visualisierungsHelfer <- function(plotObj, titel, x_achse = NULL, y_achse = NULL) {
-  
   library(ggplot2)
   
   plotObj <- plotObj +
-    ggtitle(titel) +
-    theme_minimal() +
+    ggtitle(titel) + # Füge Titel hinzu
+    theme_minimal() + #Verwnde ein minimalistisches Theme
     theme(
-      plot.title = element_text(hjust = 0.5, size = 16, face = "bold"),
-      axis.title = element_text(size = 14),
-      axis.text = element_text(size = 12)
+      plot.title = element_text(hjust = 0.5, size = 16, face = "bold"), #zentrieter Titel
+      axis.title = element_text(size = 14), #Beschriftung Achse
+      axis.text = element_text(size = 12) # Textgröße der Achsenticks
     )
   
-  if (!is.null(x_achse)) {
+  if (!is.null(x_achse)) {   # Fals x-Achsen Beschriftung angegeben
     plotObj <- plotObj + xlab(x_achse)
   }
-  if (!is.null(y_achse)) {
+  if (!is.null(y_achse)) {   # Fals y-Achsen Beschriftung angegeben
     plotObj <- plotObj + ylab(y_achse)
   }
   
   return(plotObj)
+}
+
+# Prüft, ob eine Variable numerisch ist, aber als Kategorie genutzt werden sollte,
+# und wandelt sie in einen Faktor um.
+# Parameter: x - ein Vektor
+# Rückgabe: Faktor, wenn der Vektor numerisch ist, ansonsten der Originalvektor
+
+convertToFactor <- function(x) {
+  if (is.numeric(x)) {
+    return(as.factor(x))  # Umwandlung in Faktor
+  } else {
+    return(x)  # Originalvektor
+  }
 }

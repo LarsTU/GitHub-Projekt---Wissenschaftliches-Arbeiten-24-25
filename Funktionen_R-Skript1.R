@@ -55,14 +55,14 @@ analyse_kategorial <- function(variable) {
 # iii)
 # Funktion für bivariate deskriptive Statistiken
 # zwischen zwei kategorialen Variablen (Kontingenztafel mit absoluter
-# und mit relativer Haufigkeit)
+# und mit relativer Häufigkeit)
 zusammenhang_kategorial <- function(x, y) {
     x <- convertToFactor(x)
     y <- convertToFactor(y)
-    # Kontingenztafel mit absoluter Haufigkeit erstellen
+    # Kontingenztafel mit absoluter Häufigkeit erstellen
     abs_tabelle <- table(x, y)
 
-    # Kontingenztafel mit relativer Haufigkeit erstellen
+    # Kontingenztafel mit relativer Häufigkeit erstellen
     rel_tabelle <- prop.table(abs_tabelle, margin = 1)
 
     return(list(
@@ -70,8 +70,6 @@ zusammenhang_kategorial <- function(x, y) {
         "Kontingenztafel mit relativer Haufigkeit" = rel_tabelle
     ))
 }
-# Beispiel
-zusammenhang_kategorial(titanic$Survived, titanic$Sex)
 
 # iv)
 # Funktion für bivariate deskriptive Statistiken
@@ -88,8 +86,6 @@ zusammenhang_metrisch_dichotom <- function(x, y) {
 
     return(summary_data)
 }
-# Beispiel
-zusammenhang_metrisch_dichotom(titanic$Age, titanic$Survived)
 
 # v) Funktion zur Visualisierung von 3 oder 4 kategorialen Variablen
 visualisiere_kategorial <- function(data, var1, var2, var3, var4 = NULL) {

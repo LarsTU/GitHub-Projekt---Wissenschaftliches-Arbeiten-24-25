@@ -1,4 +1,4 @@
-"Survived";"Pclass";"Sex";"Age";"SibSp";"Parch";"Fare";"Embarked";"Title";"Side";"Deck";"CabinNumbers"
+"";"Survived";"Pclass";"Sex";"Age";"SibSp";"Parch";"Fare";"Embarked";"Title";"Side";"Deck";"CabinNumbers"
 "1";"no";"3";"male";22;1;0;7,25;"Southampton";"Mr";NA;NA;NA
 "2";"yes";"1";"female";38;1;0;71,2833;"Cherbourg";"Mrs";"Steuerbord";"C";"85"
 "3";"yes";"3";"female";26;0;0;7,925;"Southampton";"Ms";NA;NA;NA

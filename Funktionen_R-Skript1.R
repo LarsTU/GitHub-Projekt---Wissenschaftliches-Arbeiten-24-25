@@ -1,7 +1,7 @@
 # Aufgabe 2
 
 source("Funktionen-R-Skript 2.R") # Helferfunktionen
-titanic <- read.csv("titanic_cleaned.csv")
+titanic = read.csv("titanic_cleaned_richtig.csv", sep = ";")
 library(ggplot2)
 # i) Funktion für metrische Variablen (angepasst):
 
@@ -129,5 +129,3 @@ balkendiagramm <- function(variable) {
 }
 
 
-visualisiere_kategorial(titanic, "Pclass", "Sex", "Survived")
-balkendiagramm(titanic$Embarked)

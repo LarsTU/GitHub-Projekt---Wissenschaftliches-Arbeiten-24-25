@@ -2,7 +2,7 @@
 #Funktion für bivariate deskriptive Statistiken 
 #zwischen zwei kategorialen Variablen (Kontingenztafel mit absoluter 
 #und mit relativer Haufigkeit)
-f_3 <- function(x, y) {
+zusammenhang_kategorial <- function(x, y) {
   #Kontingenztafel mit absoluter Haufigkeit erstellen
   abs_tabelle <- table(x,y)
   
@@ -14,12 +14,12 @@ f_3 <- function(x, y) {
 }
 
 #Beispiel
-f_3(titanic$Survived, titanic$Sex)
+zusammenhang_kategorial(titanic$Survived, titanic$Sex)
 
 #iv)
 #Funktion für bivariate deskriptive Statistiken 
 #zwischen einer metrischen (x) und einer dichotomen (y) Variablen
-f_4 <- function(x, y) {
+zusammenhang_metrisch_dichotom <- function(x, y) {
   #Mittelwert, Median, Standardabweichung für jede Gruppe
   summary_data <- data.frame(
     Gruppe = levels(y),
@@ -32,5 +32,5 @@ f_4 <- function(x, y) {
 }
 
 #Beispiel 
-f_4(titanic$Age, titanic$Survived)
+zusammenhang_metrisch_dichotom(titanic$Age, titanic$Survived)
 

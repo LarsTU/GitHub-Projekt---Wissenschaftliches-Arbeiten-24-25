@@ -1,4 +1,6 @@
 # Aufgabe 3
+source("Funktionen_R-Skript1.R") # Helferfunktionen
+titanic = read.csv("titanic_cleaned_richtig.csv", sep = ";")
 
 #Anwendung von Funktionen aus Aufgabe 2.a
 #i)

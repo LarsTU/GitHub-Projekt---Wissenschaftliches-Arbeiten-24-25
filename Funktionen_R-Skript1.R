@@ -13,7 +13,7 @@ analyse_metrisch <- function(variable) {
         Standardabweichung = sd(variable, na.rm = TRUE), # Standardabweichung
         Minimum = min(variable, na.rm = TRUE), # Minimum
         Maximum = max(variable, na.rm = TRUE), # Maximum
-        Quartile = quantile(variable, probs = c(0.25, 0.75)),
+        Quartile = quantile(variable, probs = c(0.25, 0.75), na.rm = TRUE),
         # unteres und oberes Quartil
         range = max(variable, na.rm = TRUE) - min(variable, na.rm = TRUE),
         # range/ Spannweite

@@ -49,10 +49,10 @@ visualisierungsHelfer <- function(plotObj, titel, x_achse = NULL, y_achse = NULL
       axis.text = element_text(size = 12) # Textgröße der Achsenticks
     )
   
-  if (!is.null(x_achse)) {   # Fals x-Achsen Beschriftung angegeben
+  if (!is.null(x_achse)) {   # Falls x-Achsen Beschriftung angegeben
     plotObj <- plotObj + xlab(x_achse)
   }
-  if (!is.null(y_achse)) {   # Fals y-Achsen Beschriftung angegeben
+  if (!is.null(y_achse)) {   # Falls y-Achsen Beschriftung angegeben
     plotObj <- plotObj + ylab(y_achse)
   }
   

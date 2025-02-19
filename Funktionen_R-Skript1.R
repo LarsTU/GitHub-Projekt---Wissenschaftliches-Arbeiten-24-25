@@ -1,3 +1,4 @@
+
 # Aufgabe 2
 
 source("Funktionen-R-Skript 2.R") # Helferfunktionen
@@ -75,7 +76,6 @@ zusammenhang_kategorial <- function(x, y) {
 # Funktion für bivariate deskriptive Statistiken
 # zwischen einer metrischen (x) und einer dichotomen (y) Variablen
 zusammenhang_metrisch_dichotom <- function(x, y) {
-    y <- convertToFactor(y)
     # Mittelwert, Median, Standardabweichung für jede Gruppe
     summary_data <- data.frame(
         Gruppe = levels(y),
@@ -127,5 +127,6 @@ balkendiagramm <- function(variable) {
   
   return(visualisierungsHelfer(plot, "Balkendiagramm der kategorialen Variable"))
 }
+
 
 

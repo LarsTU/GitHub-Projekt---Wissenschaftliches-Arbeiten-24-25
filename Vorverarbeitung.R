@@ -127,3 +127,7 @@ for (i in seq_len(nrow(titanic))) {
 
 # Entfernt die Variablen "PassengerId", "Name", "Ticket" und "Cabin"
 titanic <- titanic[, !(names(titanic) %in% c("PassengerId", "Name", "Ticket", "Cabin"))]
+
+
+saveRDS(titanic, file="titanic_cleaned.Rds")
+

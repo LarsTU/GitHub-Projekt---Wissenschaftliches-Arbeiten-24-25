@@ -3,11 +3,11 @@ library(ggplot2)
 
 # iv) Bivariate Analysen zwischen einer metrischen und einer zweiteiligen Variablen
 # Zusammenhang zwischen Alter und Überlebensstatus
-f_4(titanic$Age, titanic$Survived)
+zusammenhang_metrisch_dichotom(titanic$Age, titanic$Survived)
 # Es wird untersucht, ob jüngere oder ältere Passagiere eher überlebt haben.
 
 # Zusammenhang zwischen Ticketpreis und Überlebensstatus
-f_4(titanic$Fare, titanic$Survived)
+zusammenhang_metrisch_dichotom(titanic$Fare, titanic$Survived)
 # Sie zeigt, ob es einen Zusammenhang zwischen einem höheren Ticketpreis
 #und der Wahrscheinlichkeit zu überleben gibt
 
@@ -19,7 +19,7 @@ visualisiere_kategorial(titanic, "Pclass", "Survived", "Sex")
 
 # vi) Weitere sinnvolle Analysen und Visualisierungen
 # Balkendiagramm die Häufigkeit der Überlebenden und Nicht-Überlebenden.
-balkendiagramm(titanic$Survived)
+saeulendiagramm(titanic$Survived)
 
 # Visualisierung der Altersverteilung nach Überlebensstatus
 ggplot(titanic, aes(x = Age, fill = factor(Survived))) +
@@ -34,7 +34,7 @@ ggplot(titanic, aes(x = Age, fill = factor(Survived))) +
 ggplot(titanic, aes(x = factor(Pclass), y = Fare, fill = factor(Survived))) +
   geom_boxplot() +
   labs(title = "Ticketpreis nach Überlebensstatus und Klasse", x = "Klasse", y = "Ticketpreis") +
-  scale_fill_manual(values = c("red", "green")) +
+  scale_fill_manual(values = c("red", "green")) 
   theme_minimal()
 #Ein Boxplot, der zeigt, wie sich der Ticketpreis in den verschiedenen Klassen 
 #zwischen Überlebenden und Nicht-Überlebenden unterscheidet.

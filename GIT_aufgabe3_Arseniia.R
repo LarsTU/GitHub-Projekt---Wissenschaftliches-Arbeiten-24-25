@@ -41,3 +41,7 @@ zusammenhang_metrisch_dichotom(titanic$Age, titanic$Survived)
 
 zusammenhang_metrisch_dichotom(titanic$Fare, titanic$Survived)
 #Analyse des Zusammenhangs zwischen Ticketpreis und Überlebensrate 
+
+
+
+

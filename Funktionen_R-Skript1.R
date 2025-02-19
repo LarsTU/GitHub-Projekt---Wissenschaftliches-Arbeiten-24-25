@@ -1,10 +1,10 @@
 
-# Aufgabe 2
+# Aufgabe 2) --> Funktionen zur Analyse des Datensatzes 
 
 source("Funktionen-R-Skript 2.R") # Helferfunktionen
 titanic = readRDS("titanic_cleaned.Rds")
 library(ggplot2)
-# i) Funktion für metrische Variablen (angepasst):
+# i) Funktion für metrische Variablen:
 
 analyse_metrisch <- function(variable) {
     variable = as.numeric(variable)
@@ -30,11 +30,10 @@ analyse_metrisch <- function(variable) {
 
 analyse_kategorial <- function(variable) {
     variable <- convertToFactor(variable) # Umwandlung falls nötig
+    
     # Häufigkeitstabelle (abs. Häufigkeit) für die Ausprägungen
     # einer kategorialen Variable
     absolute_häufigkeiten <- table(variable, useNA = "ifany")
-    # Argument useNA = "ifany" --> falls es fehlende Werte gibt, wird deren
-    # Häufigkeit in der Tabelle angezeigt
 
     # relative Häufigkeitstabelle für die Ausprägungen
     # einer kategorialen Variable
@@ -44,6 +43,8 @@ analyse_kategorial <- function(variable) {
 
     # Modus für kategoriale Variablen
     modus <- berechneModus(variable) # Nutzung der Modus-Helferfunktion
+    
+    
     # speichert Statistiken in einer Liste
     statistiken <- list(
         Absolute_Häufigkeiten = absolute_häufigkeiten,
@@ -53,10 +54,10 @@ analyse_kategorial <- function(variable) {
 
     return(statistiken) # Rückgabe der Statistiken für kategoriale Variablen
 }
-# iii)
-# Funktion für bivariate deskriptive Statistiken
-# zwischen zwei kategorialen Variablen (Kontingenztafel mit absoluter
-# und mit relativer Häufigkeit)
+# iii) Funktion für bivariate deskriptive Statistiken 
+# zwischen zwei kategorialen Variablen 
+
+# Kontingenztafel mit absoluter und mit relativer Häufigkeit
 zusammenhang_kategorial <- function(x, y) {
     x <- convertToFactor(x)
     y <- convertToFactor(y)
@@ -64,8 +65,9 @@ zusammenhang_kategorial <- function(x, y) {
     abs_tabelle <- table(x, y)
 
     # Kontingenztafel mit relativer Häufigkeit erstellen
-    rel_tabelle <- prop.table(abs_tabelle, margin = 1)
+    rel_tabelle <- prop.table(abs_tabelle)
 
+    # Rückgabe der Kontigenztafeln als Elemente einer Liste
     return(list(
         "Kontingenztafel mit absoluter Haufigkeit" = abs_tabelle,
         "Kontingenztafel mit relativer Haufigkeit" = rel_tabelle
@@ -75,6 +77,7 @@ zusammenhang_kategorial <- function(x, y) {
 # iv)
 # Funktion für bivariate deskriptive Statistiken
 # zwischen einer metrischen (x) und einer dichotomen (y) Variablen
+
 zusammenhang_metrisch_dichotom <- function(x, y) {
     # Mittelwert, Median, Standardabweichung für jede Gruppe
     summary_data <- data.frame(
@@ -87,19 +90,25 @@ zusammenhang_metrisch_dichotom <- function(x, y) {
     return(summary_data)
 }
 
-# v) Funktion zur Visualisierung von 3 oder 4 kategorialen Variablen
+# v) Funktion zur Visualisierung von drei oder vier kategorialen Variablen
 visualisiere_kategorial <- function(data, var1, var2, var3, var4 = NULL) {
+    
+    # Überführe Variablen in einen Faktor, falls nötig  
     var1 <- convertToFactor(var1)
     var2 <- convertToFactor(var2)
     var3 <- convertToFactor(var3)
 
+    # erstelle Säulendiagramm für drei Variablen
     if (is.null(var4)) {
         plot <- ggplot(data, aes_string(x = var1, fill = var2)) +
             geom_bar(position = "dodge") +
             facet_wrap(~ get(var3)) +
             theme_minimal()
-    } else {
-        plot <- ggplot(data, aes_string(x = var1, fill = var2)) +
+      
+        # erstelle Säulendiagramm für vier Variablen
+        } else {
+      var4 <- convertToFactor(var4) 
+      plot <- ggplot(data, aes_string(x = var1, fill = var2)) +
             geom_bar(position = "dodge") +
             facet_grid(get(var3) ~ get(var4)) +
             theme_minimal()
@@ -109,23 +118,27 @@ visualisiere_kategorial <- function(data, var1, var2, var3, var4 = NULL) {
 }
 
 # vi) Weitere Funktionen zur Deskription und Visualisierung
-# z.b Balkendiagramm für eine kategoriale Variable
-balkendiagramm <- function(variable) {
+
+# Säulendiagramm für eine kategoriale Variable
+saeulendiagramm <- function(variable) {
   library(ggplot2)  # ggplot2 laden
   variable <- convertToFactor(variable)  # Umwandlung falls nötig
   
+  # erstelle Dataframe
   df <- data.frame(
     Kategorie = names(table(variable)),
     Häufigkeit = as.vector(table(variable))
   )
   
+  # erstelle Säulendiagramm mit ggplot
   plot <- ggplot(df, aes(x = Kategorie, y = Häufigkeit, fill = Kategorie)) +
     geom_bar(stat = "identity") +
     theme_minimal() +
     xlab("Kategorie") +
     ylab("Häufigkeit")
   
-  return(visualisierungsHelfer(plot, "Balkendiagramm der kategorialen Variable"))
+  # Visualierungshelfer für einheitliche Visualsierung
+  return(visualisierungsHelfer(plot, "Säulendiagramm der kategorialen Variable"))
 }
 
 

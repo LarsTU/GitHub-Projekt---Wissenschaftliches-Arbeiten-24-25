@@ -33,9 +33,6 @@ balkendiagramm = function(variable) {
     ggtitle("Balkendiagramm der kategorialen Variable")
 }
 
- titanic <- read.csv("titanic.csv")
- visualisiere_kategorial(titanic, "Pclass", "Sex", "Survived")
- balkendiagramm(titanic$Embarked)
-
-
-
+titanic <- read.csv("titanic.csv")
+visualisiere_kategorial(titanic, "Pclass", "Sex", "Survived")
+balkendiagramm(titanic$Embarked)

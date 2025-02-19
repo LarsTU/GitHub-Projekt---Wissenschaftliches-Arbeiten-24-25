@@ -1,7 +1,7 @@
 # Aufgabe 3
 source("Funktionen_R-Skript1.R") # Helferfunktionen
 titanic = readRDS("titanic_cleaned.Rds")
-# titanic = read.csv("titanic_cleaned_richtig2.csv", sep = ",")
+
 
 #Anwendung von Funktionen aus Aufgabe 2.a
 #i)

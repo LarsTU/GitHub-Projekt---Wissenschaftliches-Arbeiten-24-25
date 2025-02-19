@@ -1,12 +1,12 @@
 # Aufgabe 2
 
 source("Funktionen-R-Skript 2.R") # Helferfunktionen
-titanic = read.csv("titanic_cleaned_richtig.csv", sep = ";")
+titanic = readRDS("titanic_cleaned.Rds")
 library(ggplot2)
 # i) Funktion für metrische Variablen (angepasst):
 
 analyse_metrisch <- function(variable) {
-    variable <- convertToFactor(variable) # Umwandlung falls nötig
+    variable = as.numeric(variable)
     statistiken <- list(
         Mittelwert = mean(variable, na.rm = TRUE), # Mittelwert
         Median = median(variable, na.rm = TRUE), # Median

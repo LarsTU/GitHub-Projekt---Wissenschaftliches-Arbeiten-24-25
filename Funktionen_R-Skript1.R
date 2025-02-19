@@ -1,12 +1,13 @@
+
 # Aufgabe 2
 
 source("Funktionen-R-Skript 2.R") # Helferfunktionen
-titanic = read.csv("titanic_cleaned_richtig.csv", sep = ";")
+titanic = readRDS("titanic_cleaned.Rds")
 library(ggplot2)
 # i) Funktion für metrische Variablen (angepasst):
 
 analyse_metrisch <- function(variable) {
-    variable <- convertToFactor(variable) # Umwandlung falls nötig
+    variable = as.numeric(variable)
     statistiken <- list(
         Mittelwert = mean(variable, na.rm = TRUE), # Mittelwert
         Median = median(variable, na.rm = TRUE), # Median
@@ -75,7 +76,6 @@ zusammenhang_kategorial <- function(x, y) {
 # Funktion für bivariate deskriptive Statistiken
 # zwischen einer metrischen (x) und einer dichotomen (y) Variablen
 zusammenhang_metrisch_dichotom <- function(x, y) {
-    y <- convertToFactor(y)
     # Mittelwert, Median, Standardabweichung für jede Gruppe
     summary_data <- data.frame(
         Gruppe = levels(y),
@@ -127,5 +127,6 @@ balkendiagramm <- function(variable) {
   
   return(visualisierungsHelfer(plot, "Balkendiagramm der kategorialen Variable"))
 }
+
 
 

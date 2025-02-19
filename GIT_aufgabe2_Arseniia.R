@@ -1,4 +1,3 @@
-
 #iii)
 #Funktion für bivariate deskriptive Statistiken 
 #zwischen zwei kategorialen Variablen (Kontingenztafel mit absoluter 
@@ -9,7 +8,7 @@ zusammenhang_kategorial <- function(x, y) {
   
   #Kontingenztafel mit relativer Haufigkeit erstellen
   rel_tabelle <- prop.table(abs_tabelle, margin = 1)
-  
+
   return(list("Kontingenztafel mit absoluter Haufigkeit" = abs_tabelle, 
               "Kontingenztafel mit relativer Haufigkeit" = rel_tabelle))
 }
@@ -34,3 +33,4 @@ zusammenhang_metrisch_dichotom <- function(x, y) {
 
 #Beispiel 
 zusammenhang_metrisch_dichotom(titanic$Age, titanic$Survived)
+

@@ -91,3 +91,7 @@ modus_metrisch = function(variable) {
   
   return(modus_metr)
 }
+
+
+
+

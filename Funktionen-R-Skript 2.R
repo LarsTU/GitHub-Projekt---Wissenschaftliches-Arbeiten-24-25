@@ -27,8 +27,7 @@ berechneModus <- function(x) {
   return(modus)
 }
 
-# Passt ein ggplot2-Objekt mit einem standardisierten Layout und Theme an,
-# für eine konsistente Darstellung der Visualisierungen.
+# Passt ein ggplot2-Objekt mit einem standardisierten Layout und Theme an
 # Parameter:
 #   - plotObj: Ein ggplot2-Objekt, das angepasst werden soll.
 #   - titel: Ein String, der als Plot-Titel genutzt wird.
@@ -44,7 +43,7 @@ visualisierungsHelfer <- function(plotObj, titel, x_achse = NULL, y_achse = NULL
     ggtitle(titel) + # Füge Titel hinzu
     theme_minimal() + #Verwnde ein minimalistisches Theme
     theme(
-      plot.title = element_text(hjust = 0.5, size = 16, face = "bold"), #zentrieter Titel
+      plot.title = element_text(hjust = 0.5, size = 16, face = "bold"), #zentrierter Titel
       axis.title = element_text(size = 14), #Beschriftung Achse
       axis.text = element_text(size = 12) # Textgröße der Achsenticks
     )

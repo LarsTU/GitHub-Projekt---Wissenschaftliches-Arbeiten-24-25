@@ -85,13 +85,14 @@ titanic$CabinNumbers <- NA
 #Bestimmt Seite, Deck und Kabinen-Nummern aus einer Kabinenliste
 extract_cabin_info <- function(cabin_string) {
   cabins <- unlist(strsplit(cabin_string, " "))  # Teile die Kabinen in eine Liste auf
-  sides <- c()  # Vektor für dieSeite
+  sides <- c()  # Vektor für die Seite
   decks <- c()  # Vektor für das Deck
   cabin_numbers <- c()  # Vektor die Kabinen-Nummern
   
   for (cabin in cabins) {
     if (nchar(cabin) > 0) {  # Überprüfe, ob die Kabine nicht leer ist
-      cabin_number <- as.numeric(gsub("[^0-9]", "", cabin))  # Extrahiere die Nummer aus der Kabinenbezeichnung
+      cabin_number <- as.numeric(gsub("[^0-9]", "", cabin))  
+      # Extrahiere die Nummer aus der Kabinenbezeichnung
       
       if (!is.na(cabin_number)) { 
         sides <- c(sides, ifelse(cabin_number %% 2 == 1, "Steuerbord", "Backbord"))  
@@ -122,8 +123,13 @@ for (i in seq_len(nrow(titanic))) {
     
   }
 }
-#durch die Initialisierung mit Na sind Einträge mit unbekannter Kabinennummer bereits NA
+#durch die Initialisierung mit Na sind Einträge mit unbekannter Kabinennummer 
+# bereits NA
 
 
 # Entfernt die Variablen "PassengerId", "Name", "Ticket" und "Cabin"
 titanic <- titanic[, !(names(titanic) %in% c("PassengerId", "Name", "Ticket", "Cabin"))]
+
+
+saveRDS(titanic, file="titanic_cleaned.Rds")
+

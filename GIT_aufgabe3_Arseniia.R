@@ -1,4 +1,7 @@
 # Aufgabe 3
+source("Funktionen_R-Skript1.R") # Helferfunktionen
+titanic = readRDS("titanic_cleaned.Rds")
+
 
 #Anwendung von Funktionen aus Aufgabe 2.a
 #i)
@@ -72,7 +75,9 @@ zusammenhang_metrisch_dichotom(titanic$Age, titanic$Survived)
 
 zusammenhang_metrisch_dichotom(titanic$Fare, titanic$Survived)
 #Analyse des Zusammenhangs zwischen Ticketpreis und Überlebensrate 
+
 #Es gibt einen wesentlichen Unterschied zwischen dem Ticketpreis der überlebten 
 #und der nicht überlebten Personen. Die überlebten Personen haben im 
 #Durchschnitt doppelt so viel für Tickets bezahlt (im Mittel 48 Euro), 
 #während die nicht überlebten nur 22 Euro im Durchschnitt bezahlten.
+

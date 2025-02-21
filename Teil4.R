@@ -2,7 +2,7 @@
 # Aufgabe 4 Teil 1
 source("Funktionen_R-Skript1.R") # Helferfunktionen
 titanic = readRDS("titanic_cleaned.Rds")
-
+library(ggplot2)
 
 #Anwendung von Funktionen aus Aufgabe 2.a
 #i)
@@ -145,6 +145,7 @@ zusammenhang_metrisch_dichotom(titanic$Age, titanic$Survived)
 #der nicht überlebten Personen. Dennoch sind die überlebten Personen im 
 #Durchschnitt ein bisschen älter.
 
+
 zusammenhang_metrisch_dichotom(titanic$Fare, titanic$Survived)
 #Analyse des Zusammenhangs zwischen Ticketpreis und Überlebensrate 
 
@@ -155,8 +156,6 @@ zusammenhang_metrisch_dichotom(titanic$Fare, titanic$Survived)
 
 
 #Aufgabe 4 v-vi
-library(ggplot2)
-
 
 # v) Visualisierung von drei oder vier kategorialen Variablen
 # Visualisierung von Überlebensrate in Bezug auf Klasse und Geschlecht
@@ -193,7 +192,7 @@ plot(Survived~Age,titanic, main="Überlebensstatus nach Altersverteilung")
 ggplot(titanic, aes(x = factor(Pclass), y = Fare, fill = factor(Survived))) +
   geom_boxplot() +
   labs(title = "Ticketpreis nach Überlebensstatus und Klasse", x = "Klasse", y = "Ticketpreis") +
-  scale_fill_manual(values = c("red", "green")) +
+  scale_fill_manual(values = c("salmon", "mediumturquoise")) +
   theme_minimal()
 
 #  Ein Boxplot, der zeigt, wie sich der Ticketpreis in den verschiedenen Klassen zwischen 
@@ -205,43 +204,39 @@ ggplot(titanic, aes(x = factor(Pclass), y = Fare, fill = factor(Survived))) +
 # während die ärmeren Passagiere (3. Klasse) benachteiligt waren.
 
 # --------------------------------------------------------
-remove_outliers_for_group <- function(df, value_col, group_col, target_group) {
+#Entferne Ausreißer
+remove_outliers <- function(df, value_col, group_col) {
   # value_col: Spalte mit den numerischen Werten, aus denen die Ausreißer entfernt werden sollen
   # group_col: Spalte, nach der gruppiert wird (z.B. Klassen oder Kategorien)
-  # target_group: Die Gruppe, für die Ausreißer entfernt werden sollen (z.B. 1 für Pclass)
   
   # Sicherstellen, dass die Spalten als Namen übernommen werden
   value_col <- as.name(value_col)
   group_col <- as.name(group_col)
   
-  #  Zielgruppe filtern 
-  df_target <- subset(df, df[[group_col]] == target_group)
+  # Split nach Gruppen und Filterung der Ausreißer
+  df_clean <- do.call(rbind, lapply(split(df, df[[group_col]]), function(sub_df) {
+    # IQR für jede Gruppe berechnen
+    Q1 <- quantile(sub_df[[value_col]], 0.25, na.rm = TRUE)
+    Q3 <- quantile(sub_df[[value_col]], 0.75, na.rm = TRUE)
+    IQR <- Q3 - Q1
+    
+    # Filter: Nur Werte innerhalb von [Q1 - 1.5*IQR, Q3 + 1.5*IQR] behalten
+    sub_df <- subset(sub_df, 
+                     sub_df[[value_col]] >= (Q1 - 1.5 * IQR) & 
+                       sub_df[[value_col]] <= (Q3 + 1.5 * IQR))
+    return(sub_df)
+  }))
   
-  #  IQR für diese Gruppe berechnen
-  Q1 <- quantile(df_target[[value_col]], 0.25, na.rm = TRUE)
-  Q3 <- quantile(df_target[[value_col]], 0.75, na.rm = TRUE)
-  IQR <- Q3 - Q1
-  
-  #  Nur Werte innerhalb von [Q1 - 1.5*IQR, Q3 + 1.5*IQR] behalten
-  df_target <- subset(df_target, 
-                      df_target[[value_col]] >= (Q1 - 1.5 * IQR) & 
-                        df_target[[value_col]] <= (Q3 + 1.5 * IQR))
-  
-  #  Alle anderen Gruppen unverändert lassen
-  df_rest <- subset(df, df[[group_col]] != target_group)
-  
-  #  Daten zusammenführen und zurückgeben
-  return(rbind(df_target, df_rest))
+  return(df_clean)
 }
-# Bereinigte Daten für Pclass = 1 erstellen
-titanic_clean <- remove_outliers_for_group(titanic, 
-                                           value_col = "Fare", 
-                                           group_col = "Pclass", 
-                                           target_group = 1)
 
-# Ergebnis mit ggplot visualisieren
-library(ggplot2)
-plot=ggplot(titanic_clean, aes(x = factor(Pclass), y = Fare, fill = factor(Survived))) +
+# Bereinigte Daten für Pclass = 1 erstellen
+titanic_clean <- remove_outliers(titanic,
+                                 value_col = "Fare",
+                                 group_col = "Pclass")
+
+
+plot=ggplot(titanic_clean, aes(x = factor(Pclass), y = Fare, fill = Survived)) +
   geom_boxplot() +
   scale_fill_manual(values = c("no" = "salmon", "yes" = "mediumturquoise")) +
   labs(title = "Ticketpreis nach Überlebensstatus und Klasse (ohne Ausreißer in Klasse 1)",
@@ -250,3 +245,21 @@ plot=ggplot(titanic_clean, aes(x = factor(Pclass), y = Fare, fill = factor(Survi
   theme_minimal()
 visualisierungsHelfer(plot, "Ticketpreis nach Überlebensstatus und Klasse (ohne Ausreißer in Klasse 1)")
 
+# In allen Klassen hatten Überlebende tendenziell höhere Ticketpreise
+# als Nicht-Überlebende 
+# Besonders in der 1. Klasse sind die 
+# Ticketpreise der Überlebenden deutlich höher.
+# In den Klasse 2 und 3 sind die Boxen enger beieinander, 
+# was ähnlichere Ticketpreise für Überlebende und Nicht-Überlebende 
+# in diesen Klassen zeigt.
+# 1. Klasse hat insgesamt die höchsten Ticketpreise mit größerer Preisspanne.
+# 2. Klasse hat mittlere Preise 
+# 3. Klasse zeigt sehr niedrige Preise 
+
+#---------------------------------------------------------------------
+visualisiere_kategorial(titanic, "Pclass", "Embarked", "Sex")
+#das Säulendiagramm zeigt,
+# Southampton  dominiert in allen Klassen und bei beiden Geschlechtern, 
+# besonders bei 3. Klasse und Männern.
+# Cherbourg  ist besonders bei 1. Klasse vertreten, sowohl bei Männern als auch Frauen.
+# Queenstown kommt sehr selten vor und hauptsächlich bei 3. Klasse.

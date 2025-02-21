@@ -69,8 +69,8 @@ zusammenhang_kategorial <- function(x, y) {
 
     # Rückgabe der Kontigenztafeln als Elemente einer Liste
     return(list(
-        "Kontingenztafel mit absoluter Haufigkeit" = abs_tabelle,
-        "Kontingenztafel mit relativer Haufigkeit" = rel_tabelle
+        "Kontingenztafel mit absoluter Häufigkeit" = abs_tabelle,
+        "Kontingenztafel mit relativer Häufigkeit" = rel_tabelle
     ))
 }
 

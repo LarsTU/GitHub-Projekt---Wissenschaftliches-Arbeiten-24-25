@@ -45,6 +45,7 @@ analyse_metrisch(titanic$Fare)
 # unterschiedlichen Klassen und den dadurch sehr verschiedenen Ticketpreisen
 # zu tun hat. 
 
+
 #ii)
 analyse_kategorial(titanic$Survived)
 #Häufigkeitstabellen (mit absoluter und mit relativer Häufigkeit) für die 
@@ -88,6 +89,49 @@ analyse_kategorial(titanic$Pclass)
 # steht die 1. Klasse mit 216 Personen, danach kommt die 2. Klasse 
 # mit 184 Personen.
 
+
+analyse_kategorial(titanic$Sex)
+# Häufigkeitstabellen (absolute und relative Häufigkeit) für das Geschlecht
+# der Passagiere
+
+# $Absolute_Häufigkeiten
+# variable
+# female   male 
+#    314    577 
+
+# $Relative_Häufigkeiten
+# variable
+#   female     male 
+# 0.352413 0.647587 
+
+# $Modus
+# [1] "male"
+
+# Auf der Titanic waren deutlich mehr Männer (577) als Frauen (314).
+
+
+analyse_kategorial(titanic$Embarked)
+# Häufigkeitstabellen (absolute und relative Häufigkeit) für die Zustiegshafen
+
+# $Absolute_Häufigkeiten
+# variable
+#   Cherbourg  Queenstown Southampton        <NA> 
+#         168          77         644           2 
+
+# $Relative_Häufigkeiten
+# variable
+#   Cherbourg  Queenstown Southampton        <NA> 
+# 0.188552189 0.086419753 0.722783389 0.002244669 
+
+# $Modus
+# [1] "Southampton"
+
+# Die meisten Gäste sind in Southampton zugestiegen (644 von 891 --> ~72%), was
+# auch zu erwarten ist, da die Titanic ihre Reise in Southampton begonnen hat.
+# In Cherbourg sind ca. 19% der Gäste zugestiegen und die wenigsten Gäste sind
+# in Queenstown zugestiegen (~9%).
+
+
 #iii)
 zusammenhang_kategorial(titanic$Survived, titanic$Sex)
 #Kontingenztafeln (mit absoluter und mit relativer Häufigkeit), um den 
@@ -112,7 +156,7 @@ zusammenhang_kategorial(titanic$Survived, titanic$Sex)
 # Es gibt also einen Zusammenhang zwischen Geschlecht und Überlebensrate, da 
 # wahrscheinlich zuerst Frauen und Kinder gerettet wurden. 
 
-zusammenhang_kategorial( titanic$Pclass, titanic$Survived)
+zusammenhang_kategorial(titanic$Pclass, titanic$Survived)
 #Kontingenztafeln (mit absoluter und mit relativer Häufigkeit), um den 
 #Zusammenhang zwischen Überlebensrate und Klasse zu analysieren
 
@@ -137,6 +181,32 @@ zusammenhang_kategorial( titanic$Pclass, titanic$Survived)
 # Klasse 2 schon 87 von 184 (~47%) und in Klasse 1 haben die meisten Passagiere
 #(136 von 216) sogar überlebt (~63%). Man kann also davon ausgehen, dass Passagiere
 # der höheren Klassen (1 und 2) zuerst gerettet wurden. 
+
+zusammenhang_kategorial(titanic$Embarked,titanic$Pclass)
+# Kontingenztafeln mit absoluten und relativen Häufigkeiten der Zustiegshafen
+# und der Klassenstufe
+
+# $`Kontingenztafel mit absoluter Häufigkeit`
+#              y
+# x               3   2   1
+#   Cherbourg    66  17  85
+#   Queenstown   72   3   2
+#   Southampton 353 164 127
+
+# $`Kontingenztafel mit relativer Häufigkeit`
+#              y
+# x                       3           2           1
+#   Cherbourg   0.074240720 0.019122610 0.095613048
+#   Queenstown  0.080989876 0.003374578 0.002249719
+#   Southampton 0.397075366 0.184476940 0.142857143
+
+# Den größten Anteil der Passagiere übernehmen die Passagiere, die in Southampton
+# zugestiegen und in Klasse 3 sind (~40%). Insgesamt ist der Anteil der Passagiere, 
+# die sich in Klasse 1 und 2 befinden, bei den Zustiegshafen Queenstown und Southampton
+# mit 97% (75 von 77 in Queenstown) und 80% (517 von 644 in Southampton) sehr groß.
+# In Cherbourg hingegen sind viele Passagiere aus Klasse 1 zugestiegen, 85 von
+# von 168, mit einem Anteil von ca 51%. 
+
 
 #iv)
 zusammenhang_metrisch_dichotom(titanic$Age, titanic$Survived)
@@ -179,7 +249,7 @@ saeulendiagramm(titanic$Survived)
 
 # Visualisierung des Überlebensstatus nach Altersverteilung
 plot(Survived~Age,titanic, main="Überlebensstatus nach Altersverteilung")
-# Das Gestapelte Säulendiagramm zeigt:
+# Das gestapelte Säulendiagramm zeigt:
 #  Kinder (< 10 Jahre) hatten eine höhere Überlebensrate als Erwachsene
 # („Frauen und Kinder zuerst“). 
 # Erwachsene zwischen 20–50 Jahren hatten

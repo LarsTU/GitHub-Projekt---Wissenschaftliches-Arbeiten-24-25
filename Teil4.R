@@ -204,4 +204,49 @@ ggplot(titanic, aes(x = factor(Pclass), y = Fare, fill = factor(Survived))) +
 # Schlussfolgerung: Wohlhabendere Passagiere (1. Klasse) hatten bessere Überlebenschancen, 
 # während die ärmeren Passagiere (3. Klasse) benachteiligt waren.
 
+# --------------------------------------------------------
+remove_outliers_for_group <- function(df, value_col, group_col, target_group) {
+  # value_col: Spalte mit den numerischen Werten, aus denen die Ausreißer entfernt werden sollen
+  # group_col: Spalte, nach der gruppiert wird (z.B. Klassen oder Kategorien)
+  # target_group: Die Gruppe, für die Ausreißer entfernt werden sollen (z.B. 1 für Pclass)
+  
+  # Sicherstellen, dass die Spalten als Namen übernommen werden
+  value_col <- as.name(value_col)
+  group_col <- as.name(group_col)
+  
+  #  Zielgruppe filtern 
+  df_target <- subset(df, df[[group_col]] == target_group)
+  
+  #  IQR für diese Gruppe berechnen
+  Q1 <- quantile(df_target[[value_col]], 0.25, na.rm = TRUE)
+  Q3 <- quantile(df_target[[value_col]], 0.75, na.rm = TRUE)
+  IQR <- Q3 - Q1
+  
+  #  Nur Werte innerhalb von [Q1 - 1.5*IQR, Q3 + 1.5*IQR] behalten
+  df_target <- subset(df_target, 
+                      df_target[[value_col]] >= (Q1 - 1.5 * IQR) & 
+                        df_target[[value_col]] <= (Q3 + 1.5 * IQR))
+  
+  #  Alle anderen Gruppen unverändert lassen
+  df_rest <- subset(df, df[[group_col]] != target_group)
+  
+  #  Daten zusammenführen und zurückgeben
+  return(rbind(df_target, df_rest))
+}
+# Bereinigte Daten für Pclass = 1 erstellen
+titanic_clean <- remove_outliers_for_group(titanic, 
+                                           value_col = "Fare", 
+                                           group_col = "Pclass", 
+                                           target_group = 1)
+
+# Ergebnis mit ggplot visualisieren
+library(ggplot2)
+plot=ggplot(titanic_clean, aes(x = factor(Pclass), y = Fare, fill = factor(Survived))) +
+  geom_boxplot() +
+  scale_fill_manual(values = c("no" = "salmon", "yes" = "mediumturquoise")) +
+  labs(title = "Ticketpreis nach Überlebensstatus und Klasse (ohne Ausreißer in Klasse 1)",
+       x = "Klasse",
+       y = "Ticketpreis") +
+  theme_minimal()
+visualisierungsHelfer(plot, "Ticketpreis nach Überlebensstatus und Klasse (ohne Ausreißer in Klasse 1)")
 

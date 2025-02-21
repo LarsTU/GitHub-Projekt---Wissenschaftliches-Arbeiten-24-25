@@ -1,25 +1,24 @@
 #Aufgabe 4 iv-vi
 library(ggplot2)
-
-# iv) Bivariate Analysen zwischen einer metrischen und einer zweiteiligen Variablen
-# Zusammenhang zwischen Alter und Überlebensstatus
-zusammenhang_metrisch_dichotom(titanic$Age, titanic$Survived)
-# Es wird untersucht, ob jüngere oder ältere Passagiere eher überlebt haben.
-
-# Zusammenhang zwischen Ticketpreis und Überlebensstatus
-zusammenhang_metrisch_dichotom(titanic$Fare, titanic$Survived)
-# Sie zeigt, ob es einen Zusammenhang zwischen einem höheren Ticketpreis
-#und der Wahrscheinlichkeit zu überleben gibt
+source("Funktionen_R-Skript1.R") # Helferfunktionen
+titanic = readRDS("titanic_cleaned.Rds")
 
 # v) Visualisierung von drei oder vier kategorialen Variablen
 # Visualisierung von Überlebensrate in Bezug auf Klasse und Geschlecht
 visualisiere_kategorial(titanic, "Pclass", "Survived", "Sex")
-#So kann man erkennen, ob Frauen oder Männer in bestimmten Klassen eher
-#überlebt haben.
+# Diese Visualisierung zeigt, wie die Überlebensrate vom Geschlecht der 
+# Passagiere und ihrer Klassenstufe zusammenhängt.
+# --> Frauen hatten generell eine höhere Überlebensrate als Männer.
+# In der 1. Klasse war die Überlebensrate am höchsten, insbesondere bei Frauen.
+# In der 3. Klasse hatten Männer kaum Überlebenschancen, während einige Frauen
+# überlebt haben.
+# Mit höherer Klasse waren die Überlebenschancen also größer.
 
 # vi) Weitere sinnvolle Analysen und Visualisierungen
-# Balkendiagramm die Häufigkeit der Überlebenden und Nicht-Überlebenden.
+# Säulendiagramm die Häufigkeit der Überlebenden und Nicht-Überlebenden.
 saeulendiagramm(titanic$Survived)
+#Die Säule für „no“ (Nicht-Überlebende) ist deutlich höher 
+#--> die Mehrheit der Passagiere ist gestorben. 
 
 # Visualisierung der Altersverteilung nach Überlebensstatus
 ggplot(titanic, aes(x = Age, fill = factor(Survived))) +
@@ -27,8 +26,16 @@ ggplot(titanic, aes(x = Age, fill = factor(Survived))) +
   labs(title = "Altersverteilung nach Überlebensstatus", x = "Alter", y = "Anzahl der Passagiere") +
   scale_fill_manual(values = c("red", "green")) +
   theme_minimal()
-#Ein Histogramm, das zeigt, wie sich das Alter in Bezug auf den
-#Überlebensstatus verteilt.
+plot(Survived~Age,titanic, main="Überlebensstatus nach Altersverteilung",
+     ylab="überlebt", xlab="Alter",yaxt="n")
+axis(2,at=c(0.25,0.75),labels=c("Ja","Nein"),tick=FALSE)
+
+#  Ein Histogramm, das zeigt, wie sich das Alter in Bezug auf den Überlebensstatus verteilt.
+#  Kinder (< 10 Jahre) hatten eine höhere Überlebensrate,da viele gerettet wurden („Frauen und Kinder zuerst“). 
+#  Die meisten Erwachsenen zwischen 20–40 Jahren hatten eine hohe Sterblichkeit.
+#  Senioren hatten eine sehr geringe Überlebenschance.
+# Schlussfolgerung: Jüngere Passagiere hatten bessere Überlebenschancen, insbesondere Kleinkinder.
+
 
 # Visualisierung der Ticketpreisverteilung nach Überlebensstatus und Klasse
 ggplot(titanic, aes(x = factor(Pclass), y = Fare, fill = factor(Survived))) +

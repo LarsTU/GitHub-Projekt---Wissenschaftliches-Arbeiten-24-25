@@ -13,6 +13,6 @@ Lars Engelhard
 
 **Funktionen_R-Skript1.R** --> In diesem R-Skript stehen alle Funktionen, die auch in Teil 4 verwendet werden.
 
-**Funktionen-R-Skript 2.R** --> in diesem R-Skript stehen alle Helferfunktionen (interne Funktionen).
+**Funktionen-R-Skript 2.R** --> In diesem R-Skript stehen alle Helferfunktionen (interne Funktionen).
 
 **Teil4.R** --> In diesem R-Skript werden alle Funktionen aus Teil 2 (Funktionen_R-Skript1.R) ausgeführt und die Ergebnisse in Form von Graphiken/ Plots werden entsprechend analysiert und interpretiert.

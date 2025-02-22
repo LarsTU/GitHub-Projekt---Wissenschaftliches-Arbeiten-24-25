@@ -211,18 +211,30 @@ zusammenhang_kategorial(titanic$Embarked,titanic$Pclass)
 #iv)
 zusammenhang_metrisch_dichotom(titanic$Age, titanic$Survived)
 #Analyse des Zusammenhangs zwischen Alter und Überlebensrate 
-#Es gibt keinen wesentlichen Unterschied zwischen dem Alter der überlebten und 
-#der nicht überlebten Personen. Dennoch sind die überlebten Personen im 
-#Durchschnitt ein bisschen älter.
+
+#         Gruppe Mittelwert Median      Std
+#     no      no   30.21038     30 12.63442
+#    yes    yes   28.13061     28 14.05513
+
+# Es gibt keinen wesentlichen Unterschied zwischen dem Alter der überlebten und 
+# der nicht überlebten Personen. Dennoch sind die Personen, die überlebt haben, im 
+# Durchschnitt ein wenig jünger.
 
 
 zusammenhang_metrisch_dichotom(titanic$Fare, titanic$Survived)
 #Analyse des Zusammenhangs zwischen Ticketpreis und Überlebensrate 
 
-#Es gibt einen wesentlichen Unterschied zwischen dem Ticketpreis der überlebten 
-#und der nicht überlebten Personen. Die überlebten Personen haben im 
-#Durchschnitt doppelt so viel für Tickets bezahlt (im Mittel 48 Euro), 
-#während die nicht überlebten nur 22 Euro im Durchschnitt bezahlten.
+#     Gruppe Mittelwert Median      Std
+# no      no   22.11789   10.5 31.38821
+# yes    yes   48.39541   26.0 66.59700
+
+# Es gibt einen wesentlichen Unterschied zwischen dem Ticketpreis der überlebten 
+# und der nicht überlebten Personen. Die überlebten Personen haben im 
+# Durchschnitt doppelt so viel für Tickets bezahlt, wie die Personen, die nicht
+# überlebt haben. Personen, die mehr für ein Ticket bezahlt haben, wurden also
+# vorzugsweise gerettet, was sich mit den Ergebnissen deckt, dass Personen aus einer
+# höheren Klasse (1) zu einem größeren Anteil überlebt haben, da für eine höhere
+# Klasse auch mehr gezahlt werden muss. 
 
 
 #Aufgabe 4 v-vi
@@ -246,14 +258,14 @@ saeulendiagramm(titanic$Survived)
 #--> die Mehrheit der Passagiere ist gestorben. 
 
 
-# Visualisierung des Überlebensstatus nach Altersverteilung
+# Visualisierung des Überlebensstatus nach Altersverteilung mit einem Mosaikplot
 plot(Survived~Age,titanic, main="Überlebensstatus nach Altersverteilung")
-# Das gestapelte Säulendiagramm zeigt:
+# Der Mosaikplot zeigt:
 #  Kinder (< 10 Jahre) hatten eine höhere Überlebensrate als Erwachsene
 # („Frauen und Kinder zuerst“). 
 # Erwachsene zwischen 20–50 Jahren hatten
 # eine niedrigere Überlebenschance
-# Senioren (wenn auch wenige -> Säulen sehr schmal) hatten 
+# Senioren (wenn auch wenige -> letzte Säule sehr schmal) hatten 
 # die niedrigste Überlebenschance.
 # Schlussfolgerung: Jüngere Passagiere hatten bessere Überlebenschancen, insbesondere Kleinkinder.
 

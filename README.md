@@ -1,10 +1,10 @@
 # GitHub-Projekt---Wissenschaftliches-Arbeiten-24-25
 GitHub Projekt im Rahmen des Moduls "Wissenschaftliches Arbeiten" im Wintersemester 24/25
 ## Gruppenteilnehmer
-Mariam Gozalishvili  
-Arseniia Mikhailova  
-Pia Herrmann  
-Lars Engelhard
+Mariam Gozalishvili --> MariamoDS 
+Arseniia Mikhailova --> aslavit
+Pia Herrmann  --> PiaHerrmann
+Lars Engelhard --> LarsTU
 ## relevante Dateien
 
 **Vorverarbeitung.R** --> Dies ist das R-Skript, in welchem die Daten eingelesen und für eine Analyse vorverarbeitet wurden.

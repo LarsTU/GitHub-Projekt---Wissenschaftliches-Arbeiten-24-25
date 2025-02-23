@@ -2,8 +2,11 @@
 GitHub Projekt im Rahmen des Moduls "Wissenschaftliches Arbeiten" im Wintersemester 24/25
 ## Gruppenteilnehmer
 Mariam Gozalishvili --> MariamoDS 
+
 Arseniia Mikhailova --> asyalevit
+
 Pia Herrmann  --> PiaHerrmann
+
 Lars Engelhard --> LarsTU
 ## relevante Dateien
 

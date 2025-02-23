@@ -259,7 +259,8 @@ saeulendiagramm(titanic$Survived)
 
 
 # Visualisierung des Überlebensstatus nach Altersverteilung mit einem Mosaikplot
-plot(Survived~Age,titanic, main="Überlebensstatus nach Altersverteilung")
+plot(Survived~Age,titanic, main="Überlebensstatus nach Altersverteilung",
+     col=c("mediumturquoise","salmon"))
 # Der Mosaikplot zeigt:
 #  Kinder (< 10 Jahre) hatten eine höhere Überlebensrate als Erwachsene
 # („Frauen und Kinder zuerst“). 
@@ -345,3 +346,14 @@ visualisiere_kategorial(titanic, "Pclass", "Embarked", "Sex")
 # besonders bei 3. Klasse und Männern.
 # Cherbourg  ist besonders bei 1. Klasse vertreten, sowohl bei Männern als auch Frauen.
 # Queenstown kommt sehr selten vor und hauptsächlich bei 3. Klasse.
+
+
+#Visualisierung der Altersverteilung in den Klassen
+plot(Pclass~Age,titanic,col=c("mediumseagreen","tomato","skyblue"),
+main="Visualisierung der Altersverteilung in den Klassen")
+colors=c("salmon","mediumturquoise","darkgreen")
+# der Plot zeigt:
+# Kinder (0–10 Jahre) waren überwiegend in der dritten Klasse.
+# Mit steigendem Alter nahm der Anteil der ersten Klasse zu.
+# Die zweite Klasse war über alle Altersgruppen relativ konstant vertreten.
+# Ältere Passagiere (50+) reisten häufiger in der ersten Klasse.
